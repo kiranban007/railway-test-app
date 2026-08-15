@@ -84,7 +84,10 @@ async function start() {
   try {
     await migrate();
   } catch (err) {
-    console.error('[db] Migration failed:', err.message);
+    console.error('[db] Migration failed. Full error below:');
+    console.error(err);
+    console.error('[db] code:', err.code, '| message:', err.message, '| host attempted:',
+      process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:[^:@]*@/, ':****@') : '(DATABASE_URL not set)');
   }
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

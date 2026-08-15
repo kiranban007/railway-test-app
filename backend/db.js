@@ -16,6 +16,10 @@ const pool = new Pool({
     : false,
 });
 
+pool.on('error', (err) => {
+  console.error('[db] Unexpected pool error (idle client):', err);
+});
+
 async function migrate() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS todos (
